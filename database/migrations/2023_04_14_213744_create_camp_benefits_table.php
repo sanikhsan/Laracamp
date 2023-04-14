@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('camp_benefits', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('camp_id');
+            $table->bigInteger('camp_id')->unsigned();
             $table->string('name');
             $table->timestamps();
+
+            // Create Relationship table CampBenefit with table Camp
+            $table->foreign('camp_id')->references('id')->on('camps')->onDelete('cascade');
         });
     }
 
