@@ -16,6 +16,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+})->name('landing');
+
+Route::prefix('customer')->group(function () {
+    Route::get('login', function () {
+        return view('login');
+    })->name('customer.login');
+
+    Route::get('checkout', function () {
+        return view('checkout');
+    })->name('customer.checkout');
+
+    Route::get('success', function () {
+        return view('checkout-success');
+    })->name('customer.checkout-success');
 });
 
 Route::get('/dashboard', function () {
