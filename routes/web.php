@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +20,11 @@ Route::get('/', function () {
 })->name('landing');
 
 Route::prefix('customer')->group(function () {
-    Route::get('login', function () {
-        return view('login');
-    })->name('customer.login');
+    Route::get('login', [CustomerController::class, 'login'])->name('customer.login');
+
+    // Socialite
+    Route::get('sign-in-google', [CustomerController::class, 'google'])->name('customer.login.google');
+    Route::get('auth/google/callback', [CustomerController::class, 'handleProviderCallback'])->name('customer.login.callback');
 
     Route::get('checkout', function () {
         return view('checkout');
