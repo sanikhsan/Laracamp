@@ -6,6 +6,7 @@ use App\Models\Camp;
 use App\Models\Checkout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\CustomerCheckoutRequest;
 
 class CustomerCheckoutController extends Controller
 {
@@ -20,8 +21,13 @@ class CustomerCheckoutController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Camp $Camp)
+    public function create(Request $request,Camp $Camp)
     {
+        if($Camp->isRegistered) {
+            $request->session()->flash('error', "Kamu sudah terdaftar pada Bootcamp {$Camp->title}.");
+            return redirect(route('customer.dashboard'));
+        }
+
         return view('checkout', [
             'Camp' => $Camp
         ]);
@@ -30,7 +36,7 @@ class CustomerCheckoutController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Camp $Camp)
+    public function store(CustomerCheckoutRequest $request, Camp $Camp)
     {
         $data = $request->all();
         $data['user_id'] = Auth::id();
