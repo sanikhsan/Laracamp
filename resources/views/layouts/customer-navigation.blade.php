@@ -12,13 +12,13 @@
                     <a class="nav-link active" aria-current="page" href="#">Program</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Mentor</a>
+                    <a class="nav-link" href="#">Benefits</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Pricing</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Business</a>
+                    <a class="nav-link" href="#">Feedback</a>
                 </li>
             </ul>
             @auth
@@ -28,7 +28,7 @@
                     <img src="{{Auth::user()->avatar}}" class="user-photo" alt="">
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="right:0; left:auto">
                         <li>
-                            <a href="#" class="dropdown-item">My Dashboard</a>
+                            <a href="{{route('customer.dashboard')}}" class="dropdown-item">My Dashboard</a>
                         </li>
                         <li>
                             <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">Sign Out</a>
