@@ -7,6 +7,8 @@ use App\Models\Checkout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CustomerCheckoutRequest;
+use App\Mail\CustomerCheckout;
+use Illuminate\Support\Facades\Mail;
 
 class CustomerCheckoutController extends Controller
 {
@@ -50,7 +52,10 @@ class CustomerCheckoutController extends Controller
         $user->save();
 
         // Create Checkout data
-        Checkout::create($data);
+        $checkouts = Checkout::create($data);
+
+        // Sending an Email After Checkout a Bootcamp
+        Mail::to(Auth::user()->email)->send(new CustomerCheckout($checkouts));
 
         return redirect(route('customer.checkout-success'));
     }

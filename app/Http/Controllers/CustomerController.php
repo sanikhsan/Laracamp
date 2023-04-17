@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CustomerRegistration;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
 
 class CustomerController extends Controller
@@ -27,9 +29,15 @@ class CustomerController extends Controller
             'email_verified_at' => date('Y-m-d H:i:s', time()),
         ];
 
-        $user = User::firstOrCreate([
-            'email' => $data['email']
-        ], $data);
+        // $user = User::firstOrCreate([
+        //     'email' => $data['email']
+        // ], $data);
+
+        $user = User::where('email', $data['email'])->first();
+        if(!$user) {
+            $user = User::create($data);
+            Mail::to($user->email)->send(new CustomerRegistration($user));
+        }
 
         Auth::login($user, true);
 
