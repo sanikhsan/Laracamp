@@ -8,27 +8,43 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Program</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Benefits</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Feedback</a>
-                </li>
+                @if (request()->routeIs('customer.*'))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('customer.dashboard')}}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('customer.edit')}}">Profile</a>
+                    </li>
+                @else
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Program</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Benefits</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Feedback</a>
+                    </li>
+                @endif
             </ul>
             @auth
             <div class="d-flex user-logged nav-item dropdown no-arrow">
                 <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                     Halo, {{Auth::user()->name}}!
-                    <img src="{{Auth::user()->avatar}}" class="user-photo" alt="">
+                    @if (Auth::user()->avatar)
+                        <img src="{{Auth::user()->avatar}}" class="user-photo" style="border-radius: 50%" alt="">
+                    @else
+                        <img src="https://ui-avatars.com/api/?name=Administrator" class="user-photo" style="border-radius: 50%" alt=""> 
+                    @endif
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="right:0; left:auto">
                         <li>
                             <a href="{{route('customer.dashboard')}}" class="dropdown-item">My Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="{{route('customer.edit')}}" class="dropdown-item">Profile</a>
                         </li>
                         <li>
                             <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">Sign Out</a>

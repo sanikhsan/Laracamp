@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use App\Models\Camp;
 use App\Models\Checkout;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class CustomerCheckoutController extends Controller
             return redirect(route('customer.dashboard'));
         }
 
-        return view('checkout', [
+        return view('customers.checkout', [
             'Camp' => $Camp
         ]);
     }

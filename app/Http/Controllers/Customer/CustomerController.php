@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use App\Mail\CustomerRegistration;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Socialite\Facades\Socialite;
@@ -12,7 +12,7 @@ use Laravel\Socialite\Facades\Socialite;
 class CustomerController extends Controller
 {
     public function login (){
-        return view('login');
+        return view('customers.login');
     }
 
     public function google () {

@@ -11,8 +11,21 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function index()
+    {
+        switch (Auth::user()->is_admin) {
+            case true:
+                return redirect(route('admin.dashboard'));
+                break;
+            
+            default:
+                return redirect(route('customer.dashboard'));
+                break;
+        }
+    }
+
     /**
-     * Display the user's profile form.
+     * Display the Admin profile form.
      */
     public function edit(Request $request): View
     {
@@ -22,7 +35,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * Update the Admin profile information.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
@@ -38,7 +51,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Delete the user's account.
+     * Delete the Admin account.
      */
     public function destroy(Request $request): RedirectResponse
     {
