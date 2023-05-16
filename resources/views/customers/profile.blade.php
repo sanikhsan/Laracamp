@@ -28,9 +28,22 @@
                     <input type="text" name="name" class="form-control" value="{{Auth::user()->name}}" required>
                   </div>
                   <div class="mb-3">
+                    <label class="form-label">Occupation</label>
+                    <input type="text" name="occupation" class="form-control" value="{{Auth::user()->occupation}}" required>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <input type="text" name="phone" class="form-control" value="{{Auth::user()->phone}}" required>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Address</label>
+                    <input type="text" name="address" class="form-control" value="{{Auth::user()->address}}" required>
+                  </div>
+                  <div class="mb-3">
                     <label class="form-label">Email address</label>
                     <input type="email" name="email" class="form-control" value="{{Auth::user()->email}}" required readonly>
                   </div>
+                  
                   <button type="submit" class="btn btn-primary">Save</button>
               </form>
             </div>

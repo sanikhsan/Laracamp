@@ -40,6 +40,10 @@ Route::prefix('customer')->group(function () {
             return view('customers.checkout-success');
         })->name('customer.checkout-success');
 
+        // Midtrans
+        Route::get('payment/success', [CustomerCheckoutController::class, 'midtransCallback']);
+        Route::post('payment/success', [CustomerCheckoutController::class, 'midtransCallback']);
+
         Route::get('dashboard', [CustomerDashboardController::class, 'index'])->name('customer.dashboard');
         Route::get('/profile', [CustomerProfileController::class, 'edit'])->name('customer.edit');
         Route::patch('/profile', [CustomerProfileController::class, 'update'])->name('customer.update');

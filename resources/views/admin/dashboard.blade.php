@@ -34,7 +34,7 @@
                                     Status Transaction
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-center">
-                                  Action
+                                  Payment
                                 </th>
                                 {{-- <th scope="col" class="px-6 py-3">
                                     <span class="sr-only">Edit</span>
@@ -57,26 +57,27 @@
                                         {{$checkout->created_at->format('M d Y')}}
                                     </td>
                                     <td class="px-6 py-4">
-                                        @if ($checkout->is_paid)
+                                        @if ($checkout->payment_status == "paid")
                                             <span class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-300 border border-green-300">Success</span>
                                         @else
                                             <span class="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">Waiting</span>
                                         @endif
                                     </td>
                                     <td class="px-6 py-4">
-                                        @if ($checkout->is_paid)
+                                        @if ($checkout->payment_status == "paid")
                                             <button class="text-white block w-full bg-green-600 focus:ring-4 focus:ring-green-200 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:focus:ring-green-900 disabled:opacity-75" disabled>Paid</button>
                                         @else
-                                            <form action="{{route('checkout.update', $checkout->id)}}" method="post">
+                                            <button class="text-white block w-full bg-yellow-600 focus:ring-4 focus:ring-yellow-200 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:focus:ring-yellow-900" disabled>Waiting for Payment</button>
+                                            {{-- <form action="{{route('checkout.update', $checkout->id)}}" method="post">
                                                 @csrf
                                                 <button type="submit" class="text-white block w-full bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-200 font-medium rounded-lg text-sm px-3 py-2.5 text-center dark:focus:ring-blue-900">Set to Paid</button>
-                                            </form>
+                                            </form> --}}
                                         @endif
                                     </td>
                                 </tr>
                             @empty
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td>No Camps Registered</td>
+                                    <td colspan="6" class="text-2xl text-center p-5">No Camps Registered</td>
                                 </tr>
                             @endforelse
                         </tbody>

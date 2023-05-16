@@ -34,14 +34,21 @@
                             <strong>IDR {{ $checkout->Camp->price }} K</strong>
                         </td>
                         <td>
-                            @if ($checkout->is_paid)
-                                <strong class="text-success">Waiting for Payment</strong>
+                            @if ($checkout->payment_status == "paid")
+                                <strong class="text-success">Payment Success</strong>
                             @else
                                 <strong>Waiting for Payment</strong>
                             @endif
                         </td>
                         <td>
-                            <a href="https://wa.me/" class="btn btn-primary">
+                            @if ($checkout->payment_status == "waiting")
+                                <a href="{{$checkout->midtrans_url}}" class="btn btn-primary">
+                                    Pay now
+                                </a> 
+                            @endif
+                        </td>
+                        <td>
+                            <a href="https://wa.me/" class="btn btn-secondary">
                                 Contact Support
                             </a>
                         </td>

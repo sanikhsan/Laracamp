@@ -12,9 +12,9 @@
                     WHAT A DAY!
                 </p>
                 <h2 class="primary-header ">
-                    Berhasil Checkout
+                    Payment is Successfully!
                 </h2>
-                <p>Silahkan menuju halaman Dashboard dan lakukan pembayaran</p>
+                <p>Your transaction is Success, now you can enjoy the benefits Camp.</p>
                 <a href="{{route('customer.dashboard')}}" class="btn btn-primary mt-3">
                     My Dashboard
                 </a>
