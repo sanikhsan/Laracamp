@@ -41,10 +41,10 @@
                     @endif
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="right:0; left:auto">
                         <li>
-                            <a href="{{route('customer.dashboard')}}" class="dropdown-item">My Dashboard</a>
+                            <a href="{{Auth::user()->is_admin ? route('admin.dashboard') : route('customer.dashboard')}}" class="dropdown-item">My Dashboard</a>
                         </li>
                         <li>
-                            <a href="{{route('customer.edit')}}" class="dropdown-item">Profile</a>
+                            <a href="{{Auth::user()->is_admin ? route('admin.profile.edit') : route('customer.edit')}}" class="dropdown-item">Profile</a>
                         </li>
                         <li>
                             <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit()">Sign Out</a>

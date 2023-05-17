@@ -15,13 +15,13 @@ class DashboardController extends Controller
         return view('admin.dashboard', [ 'checkouts' => $checkouts ]);
     }
 
-    public function updatePaid(Request $request, Checkout $checkout) {
-        $checkout->is_paid = true;
-        $checkout->save();
+    // public function updatePaid(Request $request, Checkout $checkout) {
+    //     $checkout->is_paid = true;
+    //     $checkout->save();
 
-        Mail::to($request->user())->send(new AdminConfirmation($checkout));
+    //     Mail::to($request->user())->send(new AdminConfirmation($checkout));
 
-        $request->session()->flash('success', "User's Name: {$checkout->User->name} and Camp: {$checkout->Camp->title}");
-        return redirect(route('admin.dashboard'));
-    }
+    //    $request->session()->flash('success', "User's Name: {$checkout->User->name} and Camp: {$checkout->Camp->title}");
+    //      return redirect(route('admin.dashboard'));
+    // }
 }

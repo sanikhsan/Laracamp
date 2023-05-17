@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Dashboard Page') }}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
                   {{-- Start Table --}}
                   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <caption class="p-5 text-lg font-semibold text-left text-gray-900 bg-gray-50 dark:bg-gray-800 dark:text-gray-400">
+                        <caption class="p-5 text-4xl font-semibold text-left bg-gray-50 dark:bg-gray-800 dark:text-white">
                             My Camps
                         </caption>
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

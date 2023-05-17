@@ -24,6 +24,13 @@ class ProfileController extends Controller
         }
     }
 
+    public function adminRedirect()
+    {
+        if (route('admin.redirect')) {
+            return redirect(route('login'));
+        }
+    }
+
     /**
      * Display the Admin profile form.
      */
@@ -47,7 +54,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('admin.profile.edit')->with('status', 'profile-updated');
     }
 
     /**

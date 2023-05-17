@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Customer\CustomerCheckoutController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Customer\CustomerDashboardController;
@@ -50,10 +51,13 @@ Route::prefix('customer')->group(function () {
     });
 });
 
-Route::prefix('admin')->group(function () {
+Route::get('admin', [ProfileController::class, 'adminRedirect'])->name('admin.redirect');
+
+Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(['auth', 'verified', 'EnsureUserRole:admin'])->group(function () {
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-        Route::post('/checkout/{checkout}', [DashboardController::class, 'updatePaid'])->name('checkout.update');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::resource('discount', DiscountController::class);
+        // Route::post('/checkout/{checkout}', [DashboardController::class, 'updatePaid'])->name('checkout.update');
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
