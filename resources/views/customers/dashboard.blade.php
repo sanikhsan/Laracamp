@@ -37,7 +37,7 @@
                             @if ($checkout->payment_status == "paid")
                                 <strong class="text-success">Payment Success</strong>
                             @else
-                                <strong>Waiting for Payment</strong>
+                                <strong class="text-warning">Waiting for Payment</strong>
                             @endif
                         </td>
                         <td>
