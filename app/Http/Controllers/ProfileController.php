@@ -27,7 +27,7 @@ class ProfileController extends Controller
     public function adminRedirect()
     {
         if (route('admin.redirect')) {
-            return redirect(route('login'));
+            return redirect(route('admin.login'));
         }
     }
 

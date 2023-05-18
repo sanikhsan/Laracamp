@@ -8,7 +8,9 @@ use App\Models\Checkout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CustomerCheckoutRequest;
+use App\Mail\AdminConfirmation;
 use App\Mail\CustomerCheckout;
+use App\Models\Discount;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -60,8 +62,16 @@ class CustomerCheckoutController extends Controller
         $user->address = $data['address'];
         $user->save();
 
+        // Checkout Discount Data
+        if ($request->discount_code) {
+            $discount = Discount::where('code', $request->discount_code)->first();
+            $data['discount_id'] = $discount->id;
+            $data['discount_percentage'] = $discount->percentage;
+        }
+
         // Create Checkout data
         $checkout = Checkout::create($data);
+
         // Midtrans Snap Redirect
         $this->getSnapRedirect($checkout);
 
@@ -77,16 +87,30 @@ class CustomerCheckoutController extends Controller
         $price = $checkout->Camp->price * 1000;
         $checkout->midtrans_booking_code = $orderId;
 
-        $transaction_detail = [ 
-            'order_id' => $orderId,
-            'gross_amount' => $price,
-        ];
+        
 
         $item_details[] = [
             'id' => $orderId,
             'price' => $price,
             'quantity' => 1,
             'name' => "Payment for {$checkout->Camp->title} Camp."
+        ];
+
+        $discountPrice = 0;
+        if ($checkout->Discount) {
+            $discountPrice = $price * $checkout->discount_percentage / 100;
+            $item_details[] = [
+                'id' => $checkout->Discount->code,
+                'price' => -$discountPrice,
+                'quantity' => 1,
+                'name' => "Discount {$checkout->Discount->name} ({$checkout->discount_percentage})%"
+            ];
+        }
+
+        $total = $price - $discountPrice;
+        $transaction_detail = [ 
+            'order_id' => $orderId,
+            'gross_amount' => $total,
         ];
 
         $userData = [
@@ -118,6 +142,7 @@ class CustomerCheckoutController extends Controller
         try {
             $paymentUrl = \Midtrans\Snap::createTransaction($midtrans_params)->redirect_url;
             $checkout->midtrans_url = $paymentUrl;
+            $checkout->total = $total;
             $checkout->save();
 
             return $paymentUrl;
@@ -144,6 +169,7 @@ class CustomerCheckoutController extends Controller
             else if ($fraud == 'accept') {
                 // TODO Set payment status in merchant's database to 'success'
                 $checkout->payment_status = 'paid';
+                Mail::to($request->user())->send(new AdminConfirmation($checkout));
             }
         }
         else if ($transaction_status == 'cancel') {
@@ -163,6 +189,7 @@ class CustomerCheckoutController extends Controller
         else if ($transaction_status == 'settlement') {
             // TODO set payment status in merchant's database to 'Settlement'
             $checkout->payment_status = 'paid';
+            Mail::to($request->user())->send(new AdminConfirmation($checkout));
         }
         else if ($transaction_status == 'pending') {
             // TODO set payment status in merchant's database to 'Pending'

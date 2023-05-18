@@ -34,7 +34,7 @@
                                     Status Transaction
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-center">
-                                  Payment
+                                  
                                 </th>
                                 {{-- <th scope="col" class="px-6 py-3">
                                     <span class="sr-only">Edit</span>
@@ -51,7 +51,16 @@
                                         {{$checkout->Camp->title}}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{$checkout->Camp->price}}K
+                                        @if ($checkout->discount_id)
+                                        <s>Rp {{$checkout->Camp->price * 1000}}</s><br>
+                                        Rp {{$checkout->total}}
+                                        <span
+                                            class="text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+                                            >{{$checkout->discount_percentage}}% OFF
+                                        </span>
+                                        @else
+                                            Rp {{$checkout->total}}
+                                        @endif
                                     </td>
                                     <td class="px-6 py-4">
                                         {{$checkout->created_at->format('M d Y')}}

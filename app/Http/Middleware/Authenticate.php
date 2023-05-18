@@ -13,14 +13,6 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
-        switch (Auth::user()->is_admin) {
-            case true:
-                return redirect(route('admin.dashboard'));
-                break;
-            
-            default:
-                return $request->expectsJson() ? null : route('customer.login');
-                break;
-        }
+        return $request->expectsJson() ? null : route('customer.login');
     }
 }

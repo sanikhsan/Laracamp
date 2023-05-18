@@ -42,11 +42,12 @@ class DiscountController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * public function show(Discount $discount)
+     * {
+     *   //
+     * }
      */
-    public function show(Discount $discount)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
